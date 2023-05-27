@@ -1,9 +1,9 @@
-$("#search").click(function(e) {
-    e.preventDefault();
-    $("#searchText").blur();
-    // console.log(e);
-    // console.log(this);
-    // console.log("Hii");
+$("#search").click(function (e) {
+  e.preventDefault();
+  $("#searchText").blur();
+  // console.log(e);
+  // console.log(this);
+  // console.log("Hii");
 });
 
 // $(".addNote").click(function() {
@@ -12,12 +12,12 @@ $("#search").click(function(e) {
 //     // if($("#txt").val() === null) {
 //     //        console.log("Hiii");
 //     //    }
-       
+
 //     if($("#txt").val() != '') {
 //         $(".addNote").after("<div class='savedNotes'> <textarea class='savedText' disabled>" + note + "</textarea> <div> <button class='edit btn'>Edit</button> <button class='delete btn'>Delete</button> </div> </div>");
 //         $("#txt").val("");
 //     }
-    
+
 // })
 
 // $(document).keypress(function(e) {
@@ -33,50 +33,45 @@ $("#search").click(function(e) {
 //     }
 // })
 
-const savedTexts = []; 
+const savedTexts = [];
 
-const editFunction = (idx) => {
-
-
+function xyz(textarea) {
+  console.log(textarea.value);
 }
 
-$(".addNote").click(function() {
+function editFunction(i) {
+  const textarea = document.getElementById("textarea-" + i);
+  textarea.disabled = false;
+  textarea.focus();
 
-    // savedTexts[i] = $("#txt").val();    
-   
+  textarea.addEventListener("focusout", function () {
+    const updatedTextValue = $("#textarea-" + i).val();
+    textarea.disabled = true;
+    savedTexts[i] = updatedTextValue;
+    // textarea.innerText = updatedTextValue;
 
-    if($("#txt").val() != '') {
+    xyz(textarea);
+  });
+}
 
-        let allNotesHtml = "";
-        savedTexts.push($("#txt").val());
-        for(let i = 0; i < savedTexts.length; i++) {
-            allNotesHtml += `<div class="savedNotes"> <textarea class='savedText' disabled> ${savedTexts[i]} </textarea> <div> <button class='edit btn' ${onClick= () => editFunction(i)} >Edit</button> <button class='delete btn'>Delete</button> </div> </div>`
-            $("#txt").val("");
-        }
+$(".addNote").click(function () {
+  if ($("#txt").val()) {
+    let allNotesHtml = "";
 
-        const notesWrapper = document.getElementById("notesContainer");
-        console.log(allNotesHtml);
-        notesWrapper.innerHTML = allNotesHtml;
-
+    savedTexts.push($("#txt").val());
+    console.log(savedTexts);
+    for (let i = 0; i < savedTexts.length; i++) {
+      allNotesHtml += `<div class="savedNotes"> <textarea class='savedText' id="textarea-${i}" disabled> ${savedTexts[i]} </textarea> <div> <button class='edit btn' onclick="editFunction(${i})"  >Edit</button> <button class="delete btn">Delete</button> </div> </div>`;
+      $("#txt").val("");
     }
-    
-})
 
+    console.log("HERE IS THE FOR LOOP");
 
+    const notesWrapper = document.getElementById("notesContainer");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    notesWrapper.innerHTML = allNotesHtml;
+  }
+});
 
 // $(document).keypress(function(e) {
 //     var isTxtFocused = $("#txt").is(':focus');
@@ -91,16 +86,6 @@ $(".addNote").click(function() {
 //         }
 //     }
 // })
-
-
-
-
-
-
-
-
-
-
 
 // e.preventDefult():
 // $("#txt").val();
